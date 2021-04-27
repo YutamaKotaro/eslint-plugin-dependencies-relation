@@ -2,7 +2,7 @@ import {RuleContext} from "@typescript-eslint/experimental-utils/dist/ts-eslint"
 
 export type CommentInfo = {
   noRestriction: boolean
-  allowOnlyPath?: string[]
+  allowPath?: string[]
 }
 
 class CashComment {

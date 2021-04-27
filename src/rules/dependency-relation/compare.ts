@@ -3,13 +3,13 @@ import {contextCash} from "./cash";
 
 export function compare(commentInfo: CommentInfo) {
   const {
-    allowOnlyPath,
+    allowPath,
   } = commentInfo
 
-  if (!allowOnlyPath || allowOnlyPath.length === 0) return true
+  if (!allowPath || allowPath.length === 0) return true
 
   const baseFile = contextCash.get().getFilename()
-  for (const _alloOnlypath of allowOnlyPath) {
+  for (const _alloOnlypath of allowPath) {
     const reg = new RegExp(String.raw`^${_alloOnlypath}*`)
     if (reg.test(baseFile)) return false
   }

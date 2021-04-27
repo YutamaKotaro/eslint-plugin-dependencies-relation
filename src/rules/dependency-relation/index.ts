@@ -1,11 +1,7 @@
 import { TSESLint } from "@typescript-eslint/experimental-utils";
 // @ts-ignore
 import resolve from 'eslint-module-utils/resolve'
-import * as fs from 'fs'
-// @ts-ignore
-import extract from 'extract-comments'
 import {readComment} from "./read";
-import {receiveMessageOnPort} from "worker_threads";
 import {contextCash} from "./cash";
 import {compare} from "./compare";
 
@@ -32,10 +28,10 @@ export const dependencyRelation:TSESLint.RuleModule<"removeDollar", []> = {
         const resolvedPath = resolve(filePath, context)
         const commentInfo = readComment(resolvedPath)
         const result = compare(commentInfo)
-        console.log(result)
         if (result) {
           context.report({
             node,
+            // @ts-ignore
             message: 'それはあかんじゃろがい！'
           })
         }

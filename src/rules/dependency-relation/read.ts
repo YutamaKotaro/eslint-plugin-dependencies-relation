@@ -1,50 +1,7 @@
 import * as fs from 'fs'
-// @ts-ignore
-import _extract from 'extract-comments'
+import extract, { ExtractResult} from 'extract-comments'
 import {cashComment, CommentInfo} from "./cash";
 import {shallowResolve} from "./resolve";
-
-type Location = {
-  line: number,
-  column: number,
-}
-type LineComment = {
-  type: 'LineComment',
-  value: string,
-  range: number[],
-  loc: {
-    start: Location,
-    end: Location,
-  },
-  raw: string
-}
-type BlockComment = {
-  type: 'BlockComment',
-  value: string,
-  range: [start: number, end: number],
-  codeStart: number,
-  raw: string,
-  code: Context
-}
-type Context = {
-  context: {
-    type: 'declaration'
-    name: 'App',
-    value: string
-    string: string,
-    match: string[] // <- have some prototypes
-  },
-  value: string
-  range: [start: number, end: number]
-  loc: {
-    start: Location
-    end: Location
-  }
-}
-type ExtractResult = (LineComment | BlockComment)[]
-type Extract = (fileStr: string) => ExtractResult
-
-const extract: Extract = _extract
 
 export function readComment(path: string) {
   let commentInfo = cashComment.getComment(path)
@@ -58,8 +15,7 @@ export function readComment(path: string) {
   return commentInfo
 }
 
-
-const PLUGIN_TEXT = 'eslint-dependency-relation'
+const PLUGIN_TEXT = '@dependency-relation'
 const reg = new RegExp(PLUGIN_TEXT)
 function parseTextToComment(comment: ExtractResult, fromFilePath: string): CommentInfo {
   const commentText = comment[0].value
@@ -75,7 +31,7 @@ function parseTextToComment(comment: ExtractResult, fromFilePath: string): Comme
 
   return {
     noRestriction: false,
-    allowOnlyPath: filePaths,
+    allowPath: filePaths,
   }
 }
 
