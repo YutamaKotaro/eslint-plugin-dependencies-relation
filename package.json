@@ -1,5 +1,5 @@
 {
-  "name": "eslint-plugin-my-eslint-rules",
+  "name": "eslint-plugin-dependency-relation",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",

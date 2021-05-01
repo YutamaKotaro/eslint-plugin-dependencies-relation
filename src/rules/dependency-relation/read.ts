@@ -1,6 +1,8 @@
 import * as fs from 'fs'
 import extract, { ExtractResult} from 'extract-comments'
-import {cashComment, CommentInfo} from "./cash";
+// @ts-ignore
+import resolve from 'eslint-module-utils/resolve'
+import {cashComment, CommentInfo, contextCash} from "./cash";
 import {shallowResolve} from "./resolve";
 
 export function readComment(path: string) {
@@ -18,6 +20,11 @@ export function readComment(path: string) {
 const PLUGIN_TEXT = '@dependency-relation'
 const reg = new RegExp(PLUGIN_TEXT)
 function parseTextToComment(comment: ExtractResult, fromFilePath: string): CommentInfo {
+  if (comment.length === 0) {
+    return {
+      noRestriction: true,
+    }
+  }
   const commentText = comment[0].value
   const needToCheck = reg.test(commentText)
   if (!needToCheck) {
@@ -26,7 +33,7 @@ function parseTextToComment(comment: ExtractResult, fromFilePath: string): Comme
     }
   }
   const args = commentText.split(':')
-  const options = args[1].replace(/ /g, '')
+  // const options = args[1].replace(/ /g, '')
   const filePaths = parseFilePaths(args[2], fromFilePath)
 
   return {
@@ -40,7 +47,9 @@ function parseFilePaths(str: string, fromFilePath: string) {
   const strings = str.split(' ')
   for (const _s of strings) {
     if (!_s) continue
-    const resolvedPath = shallowResolve(fromFilePath, _s)
+    console.log(_s)
+    const context = contextCash.get()
+    const resolvedPath = resolve(_s, context)
     if (!resolvedPath) continue
     results.push(resolvedPath)
   }
