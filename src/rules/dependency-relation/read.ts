@@ -48,8 +48,8 @@ function parseFilePaths(str: string, fromFilePath: string) {
   for (const _s of strings) {
     if (!_s) continue
     console.log(_s)
-    const context = contextCash.get()
-    const resolvedPath = resolve(_s, context)
+    const resolvedPath = shallowResolve(fromFilePath, _s)
+    console.log(resolvedPath, 'resolvedPath')
     if (!resolvedPath) continue
     results.push(resolvedPath)
   }
