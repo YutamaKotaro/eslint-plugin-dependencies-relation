@@ -1,4 +1,4 @@
-import { TSESLint } from "@typescript-eslint/experimental-utils";
+import { TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
 // @ts-ignore
 import resolve from 'eslint-module-utils/resolve'
 import {readComment} from "./read";
@@ -8,13 +8,12 @@ import {compare} from "./compare";
 
 /*
     specification
-    1. get commentInfo
-      - if the file Base file try to read has limitation, noRestriction = true
-        - in this case, commentInfo have allowPath which means specified filePath is ok to read me other else not.
-      - if not, notRestriction = false.
-
+    if found import statement
+    1. resolve path (get absolutePath) by using eslint-module-utils/resolve
+    2. create commentInfo that has information from text comment having "@dependency-relation" prefix
+        @Todo: in this time, found specified comment path error (not resolved)
+    3. decide whether error exists by comparing context path with imported path
  */
-
 export const dependencyRelation:TSESLint.RuleModule<"removeDollar", []> = {
   meta: {
     type: "problem",
@@ -34,22 +33,20 @@ export const dependencyRelation:TSESLint.RuleModule<"removeDollar", []> = {
     contextCash.init(context)
     return {
       ImportDeclaration(node) {
-        console.log('1')
+        // 1.
         const filePath = node.source.value
-        console.log('2', filePath)
         const resolvedPath = resolve(filePath, context)
-
         if (!resolvedPath) return
-        console.log('33', resolvedPath)
+        // 2.
         const commentInfo = readComment(resolvedPath)
-        console.log(commentInfo)
-        const hasError = compare(commentInfo)
-        if (hasError) {
-          console.log('error reported')
+        // 3.
+        const result = compare(commentInfo, context, node)
+        if (result.existError) {
+          console.log(result.error)
           context.report({
             node,
             // @ts-ignore
-            message: 'それはあかんじゃろがい！'
+            message: result.error
           })
         }
       }

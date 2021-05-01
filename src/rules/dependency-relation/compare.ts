@@ -1,19 +1,40 @@
+import {TSESTree } from "@typescript-eslint/experimental-utils";
 import {CommentInfo} from "./cash";
-import {contextCash} from "./cash";
 
-export function compare(commentInfo: CommentInfo) {
+type SafeResult = {
+  existError: false
+}
+type ErrorResult = {
+  existError: true
+  error: string
+}
+
+export function compare(commentInfo: CommentInfo, context: any, node: TSESTree.ImportDeclaration): SafeResult | ErrorResult {
   const {
     allowPath,
     noRestriction
   } = commentInfo
-  if (!allowPath || noRestriction) return false
-
-  const baseFile = contextCash.get().getFilename()
-  for (const _alloOnlypath of allowPath) {
-    const reg = new RegExp(String.raw`^${_alloOnlypath}*`)
-    console.log(reg.test(baseFile), baseFile,'***', _alloOnlypath)
-    if (!reg.test(baseFile)) return true
+  if (!allowPath || noRestriction) {
+    return {
+      existError: false
+    }
   }
 
-  return false
+  const baseFile: string = context.getFilename()
+  for (const _alloOnlypath of allowPath) {
+    const reg = new RegExp(String.raw`^${_alloOnlypath}*`)
+    if (!reg.test(baseFile)) {
+      const sourceCode = context.getSourceCode()
+      const error = `import path ${sourceCode.getText(node.source)} is not allowed from this file`
+
+      return {
+        existError: true,
+        error,
+      }
+    }
+  }
+
+  return {
+    existError: false
+  }
 }

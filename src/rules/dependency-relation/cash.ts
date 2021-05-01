@@ -3,6 +3,7 @@ import {RuleContext} from "@typescript-eslint/experimental-utils/dist/ts-eslint"
 export type CommentInfo = {
   noRestriction: boolean
   allowPath?: string[]
+  errors?: string
 }
 
 class CashComment {
