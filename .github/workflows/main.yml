@@ -28,12 +28,12 @@ jobs:
       # Runs a single command using the runners shell
       - name: yarn install
         run: yarn install
-          - name: eslint review
-            uses: reviewdog/action-eslint@v1
-            with:
-              github_token: ${{ secrets.GITHUB_TOKEN }}
-              reporter: github-pr-review
-              eslint_flags: './**/*.{vue,ts,js}'
+      - name: eslint review
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          eslint_flags: './**/*.{vue,ts,js}'
       - name: Run eslint
         run: yarn lint
       - name: Run Jest
