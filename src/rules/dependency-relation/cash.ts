@@ -1,4 +1,5 @@
-import {RuleContext} from "@typescript-eslint/experimental-utils/dist/ts-eslint";
+import { TSESLint } from "@typescript-eslint/experimental-utils";
+
 
 export type CommentInfo = {
   noRestriction: boolean
@@ -20,7 +21,7 @@ class CashComment {
 
 export const cashComment = new CashComment()
 
-type Context = RuleContext<any, any>
+type Context = TSESLint.RuleContext<any, any>
 class ContextCash {
   public context = {} as Context
   init(context: Context) {

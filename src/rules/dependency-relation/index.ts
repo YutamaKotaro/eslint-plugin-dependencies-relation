@@ -1,24 +1,10 @@
 import { TSESLint } from "@typescript-eslint/experimental-utils";
-import {Rule} from 'eslint'
 // @ts-ignore
 import resolve from 'eslint-module-utils/resolve'
 import {readComment} from "./read";
 import {contextCash} from "./cash";
 import {compare} from "./compare";
 
-type Options = [
-  {
-    before?: boolean;
-    after?: boolean;
-    overrides?: Record<
-      string,
-      {
-        before?: boolean;
-        after?: boolean;
-      }
-      >;
-  },
-];
 /*
     specification
     if found import statement
