@@ -25,7 +25,7 @@ export function compare(commentInfo: CommentInfo, context: any, node: TSESTree.I
     const reg = new RegExp(String.raw`^${_alloOnlypath}*`)
     if (!reg.test(baseFile)) {
       const sourceCode = context.getSourceCode()
-      const error = `import path ${sourceCode.getText(node.source)} is not allowed from this file`
+      const error = createErrorMessage(sourceCode.getText(node.source))
 
       return {
         existError: true,
@@ -37,4 +37,8 @@ export function compare(commentInfo: CommentInfo, context: any, node: TSESTree.I
   return {
     existError: false
   }
+}
+
+export function createErrorMessage(path: string): string {
+  return `import path ${path} is not allowed from this file`
 }

@@ -1,11 +1,24 @@
-import { TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
+import { TSESLint } from "@typescript-eslint/experimental-utils";
+import {Rule} from 'eslint'
 // @ts-ignore
 import resolve from 'eslint-module-utils/resolve'
 import {readComment} from "./read";
 import {contextCash} from "./cash";
 import {compare} from "./compare";
 
-
+type Options = [
+  {
+    before?: boolean;
+    after?: boolean;
+    overrides?: Record<
+      string,
+      {
+        before?: boolean;
+        after?: boolean;
+      }
+      >;
+  },
+];
 /*
     specification
     if found import statement
@@ -14,7 +27,7 @@ import {compare} from "./compare";
         @Todo: in this time, found specified comment path error (not resolved)
     3. decide whether error exists by comparing context path with imported path
  */
-export const dependencyRelation:TSESLint.RuleModule<"removeDollar", []> = {
+export const dependencyRelation:TSESLint.RuleModule<"dependency-relation", unknown[]> = {
   meta: {
     type: "problem",
     docs: {
@@ -24,7 +37,7 @@ export const dependencyRelation:TSESLint.RuleModule<"removeDollar", []> = {
       url: "",
     },
     messages: {
-      removeDollar: "Remove unnecessary $ character.",
+      "dependency-relation": "Remove unnecessary $ character.",
     },
     schema: [],
     fixable: "code",
@@ -42,7 +55,6 @@ export const dependencyRelation:TSESLint.RuleModule<"removeDollar", []> = {
         // 3.
         const result = compare(commentInfo, context, node)
         if (result.existError) {
-          console.log(result.error)
           context.report({
             node,
             // @ts-ignore
