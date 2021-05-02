@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-dependency-relation",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Import relation linting rule for ESLint.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -10,9 +10,9 @@
     "test": "jest",
     "test:watch": "jest --watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["eslint", "typescript", "plugin", "import", "dependency"],
+  "author": "yutamakotaro",
+  "license": "MIT",
   "devDependencies": {
     "@types/eslint": "^7.2.10",
     "@types/jest": "^26.0.23",
