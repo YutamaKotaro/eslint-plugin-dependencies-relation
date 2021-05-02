@@ -6,7 +6,7 @@ import {createErrorMessage} from "../../../src/rules/dependency-relation/compare
 const ruleTester = new RuleTester()
 
 // @ts-ignore
-ruleTester.run('dependencyRelation/js-simple-path case', dependencyRelation, {
+ruleTester.run('import/js-simple-path case', dependencyRelation, {
   valid: [{
     ...createJsOption(),
     code: `
@@ -23,7 +23,7 @@ ruleTester.run('dependencyRelation/js-simple-path case', dependencyRelation, {
 })
 
 // @ts-ignore
-ruleTester.run('dependencyRelation/jsx-simple-path case', dependencyRelation, {
+ruleTester.run('import/jsx-simple-path case', dependencyRelation, {
   valid: [{
     ...createJsxOption(),
     code: `
@@ -41,7 +41,7 @@ ruleTester.run('dependencyRelation/jsx-simple-path case', dependencyRelation, {
 
 
 // @ts-ignore
-ruleTester.run('dependencyRelation/ts-simple-path case', dependencyRelation, {
+ruleTester.run('import/ts-simple-path case', dependencyRelation, {
   valid: [{
     ...createTsOption(),
     code: `
@@ -58,7 +58,7 @@ ruleTester.run('dependencyRelation/ts-simple-path case', dependencyRelation, {
 })
 
 // @ts-ignore
-ruleTester.run('dependencyRelation/tsx-simple-path case', dependencyRelation, {
+ruleTester.run('import/tsx-simple-path case', dependencyRelation, {
   valid: [{
     ...createTsxOption(),
     code: `
