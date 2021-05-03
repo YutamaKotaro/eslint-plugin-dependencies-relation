@@ -43,7 +43,7 @@ export const requireLimitation:TSESLint.RuleModule<"require", unknown[]> = {
         // 2.
         const commentInfo = readComment(resolvedPath)
         // 3.
-        const result = compare(commentInfo, context, (requireStatementInfo as ExtractedRequireStatement).path)
+        const result = compare(commentInfo, context, (requireStatementInfo as ExtractedRequireStatement).path, { type: 'require' })
         if (result.existError) {
           context.report({
             node,

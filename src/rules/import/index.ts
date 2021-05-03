@@ -42,7 +42,7 @@ export const importLimitation:TSESLint.RuleModule<"import", unknown[]> = {
         // 2.
         const commentInfo = readComment(resolvedPath)
         // 3.
-        const result = compare(commentInfo, context, `${filePath}`)
+        const result = compare(commentInfo, context, `${filePath}`, { type: 'import' })
         if (result.existError) {
           context.report({
             node,

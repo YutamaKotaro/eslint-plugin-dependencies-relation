@@ -20,7 +20,7 @@ ruleTester.run('require/js-simple-path case', requireLimitation, {
     code: `
       const {test} = require('./js/require/forbid');
     `,
-    errors: [{ message: createErrorMessage('./js/require/forbid')}]
+    errors: [{ message: createErrorMessage('./js/require/forbid', 'require')}]
   }]
 })
 
@@ -37,7 +37,7 @@ ruleTester.run('require/ts-simple-path case', requireLimitation, {
     code: `
       const {test} = require('./ts/require/forbid');   
     `,
-    errors: [{ message: createErrorMessage('./ts/require/forbid')}]
+    errors: [{ message: createErrorMessage('./ts/require/forbid', 'require')}]
   }],
 })
 
