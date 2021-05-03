@@ -1,4 +1,3 @@
-import {TSESTree } from "@typescript-eslint/experimental-utils";
 import {CommentInfo} from "./cash";
 
 type SafeResult = {
