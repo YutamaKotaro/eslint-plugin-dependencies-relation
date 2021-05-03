@@ -1,7 +1,7 @@
-import {dependencyRelation} from "./rules/import";
+import {importLimitation} from "./rules/import";
 
 export = {
   rules: {
-    import: dependencyRelation,
+    import: importLimitation,
   }
 }

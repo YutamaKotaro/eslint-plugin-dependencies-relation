@@ -14,17 +14,17 @@ import {ignoreFile} from "../utils/fileChecker";
         @Todo: in this time, found specified comment path error (not resolved)
     3. decide whether error exists by comparing context path with imported path
  */
-export const dependencyRelation:TSESLint.RuleModule<"dependency-relation", unknown[]> = {
+export const importLimitation:TSESLint.RuleModule<"import", unknown[]> = {
   meta: {
     type: "problem",
     docs: {
       category: "Possible Errors",
-      description: "Check JSXText's unnecessary `$` character.",
+      description: "Import relation linting rule for ESLint.",
       recommended: "error",
       url: "",
     },
     messages: {
-      "dependency-relation": "Remove unnecessary $ character.",
+      import: "Import relation linting rule for ESLint",
     },
     schema: [],
     fixable: "code",
