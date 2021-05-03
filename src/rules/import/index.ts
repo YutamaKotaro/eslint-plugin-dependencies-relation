@@ -1,10 +1,10 @@
 import { TSESLint } from "@typescript-eslint/experimental-utils";
 // @ts-ignore
 import resolve from 'eslint-module-utils/resolve'
-import {readComment} from "./read";
-import {contextCash} from "./cash";
-import {compare} from "./compare";
-import {ignoreFile} from "./fileChecker";
+import {readComment} from "../utils/read";
+import {contextCash} from "../utils/cash";
+import {compare} from "../utils/compare";
+import {ignoreFile} from "../utils/fileChecker";
 
 /*
     specification

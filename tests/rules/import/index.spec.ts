@@ -1,7 +1,7 @@
 import {RuleTester} from 'eslint'
-import {dependencyRelation} from "../../../src/rules/dependency-relation";
+import {dependencyRelation} from "../../../src/rules/import";
 import {createJsOption, createTsOption, createJsxOption, createTsxOption, createOption} from "../../utils/test";
-import {createErrorMessage} from "../../../src/rules/dependency-relation/compare";
+import {createErrorMessage} from "../../../src/rules/utils/compare";
 
 const ruleTester = new RuleTester()
 

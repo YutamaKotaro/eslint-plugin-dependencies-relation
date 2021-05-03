@@ -1,4 +1,4 @@
-import {dependencyRelation} from "./rules/dependency-relation";
+import {dependencyRelation} from "./rules/import";
 
 export = {
   rules: {
