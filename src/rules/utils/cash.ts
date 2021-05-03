@@ -21,7 +21,7 @@ class CashComment {
 
 export const cashComment = new CashComment()
 
-type Context = TSESLint.RuleContext<any, any>
+type Context = TSESLint.RuleContext<string, unknown[]>
 class ContextCash {
   public context = {} as Context
   init(context: Context) {

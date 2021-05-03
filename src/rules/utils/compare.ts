@@ -9,7 +9,12 @@ type ErrorResult = {
   error: string
 }
 
-export function compare(commentInfo: CommentInfo, context: any, node: TSESTree.ImportDeclaration): SafeResult | ErrorResult {
+export function compare(
+  commentInfo: CommentInfo,
+  /* eslint @typescript-eslint/no-explicit-any: 0, @typescript-eslint/explicit-module-boundary-types:0 */
+  context: any,
+  node: TSESTree.ImportDeclaration
+): SafeResult | ErrorResult {
   const {
     allowPath,
     noRestriction

@@ -1,8 +1,7 @@
 import * as fs from 'fs'
-import extract, { ExtractResult} from 'extract-comments'
+import extract from 'extract-comments'
 // @ts-ignore
-import resolve from 'eslint-module-utils/resolve'
-import {cashComment, CommentInfo, contextCash} from "./cash";
+import {cashComment, CommentInfo} from "./cash";
 import {shallowResolve} from "./resolve";
 
 export function readComment(path: string): CommentInfo {
