@@ -1,6 +1,6 @@
 import {RuleTester} from 'eslint'
 import {dependencyRelation} from "../../../src/rules/dependency-relation";
-import {createJsOption, createTsOption, createJsxOption, createTsxOption} from "../../utils/test";
+import {createJsOption, createTsOption, createJsxOption, createTsxOption, createOption} from "../../utils/test";
 import {createErrorMessage} from "../../../src/rules/dependency-relation/compare";
 
 const ruleTester = new RuleTester()
@@ -73,3 +73,31 @@ ruleTester.run('import/tsx-simple-path case', dependencyRelation, {
     errors: [{ message: createErrorMessage("'./ts/tsx/forbid'") }]
   }]
 })
+
+// @ts-ignore
+ruleTester.run('import/*.test.js|ts ignore patterning',dependencyRelation, {
+  valid: [{
+    ...createOption('a.test.js'),
+    code: `
+      import {test} from './js/forbid';
+    `
+  },{
+    ...createOption('a.spec.js'),
+    code: `
+      import {test} from './js/forbid';
+    `
+  }, {
+    ...createOption('a.test.ts'),
+    code: `
+      import {test} from './ts/forbid';
+    `
+  },
+    {
+      ...createOption('a.spec.ts'),
+      code: `
+      import {test} from './ts/forbid';
+    `
+    }],
+  invalid: []
+})
+

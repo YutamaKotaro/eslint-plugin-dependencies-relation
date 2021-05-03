@@ -10,7 +10,13 @@
     "test": "jest",
     "test:watch": "jest --watch"
   },
-  "keywords": ["eslint", "typescript", "plugin", "import", "dependency"],
+  "keywords": [
+    "eslint",
+    "typescript",
+    "plugin",
+    "import",
+    "dependency"
+  ],
   "author": "yutamakotaro",
   "license": "MIT",
   "devDependencies": {

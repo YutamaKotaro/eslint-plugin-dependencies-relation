@@ -6,3 +6,5 @@ tests/
 .prettierrc.js
 README.md
 tsconfig.json
+.idea
+yarn-error.log

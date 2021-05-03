@@ -4,6 +4,7 @@ import resolve from 'eslint-module-utils/resolve'
 import {readComment} from "./read";
 import {contextCash} from "./cash";
 import {compare} from "./compare";
+import {ignoreFile} from "./fileChecker";
 
 /*
     specification
@@ -34,6 +35,8 @@ export const dependencyRelation:TSESLint.RuleModule<"dependency-relation", unkno
       ImportDeclaration(node) {
         // 1.
         const filePath = node.source.value
+        const ignore = ignoreFile(context.getFilename())
+        if (ignore) return
         const resolvedPath = resolve(filePath, context)
         if (!resolvedPath) return
         // 2.
