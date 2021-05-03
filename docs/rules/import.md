@@ -14,15 +14,16 @@ export default function() {
 }
 ```
 
-Note: you don't have to use line comment and write comment on the top of file. You can write it in block comment or bottom of file.
-The important points are
-
 - write `@dependency-relation: allow:` as comment
 - file path is absolutely `relative path`
 - enable to use not only file but directory
 
 This comment means "It's just only repository directory's file to enable importing this file".
 Hence, if other file try to import this file, this plugin warns you against the rules.
+Of course, you can write comment as line or block.
+
+Note: You don't have to specify test directory(e.g test and __test__ and so on and so forth), because `*.spec.*` and `*.test.*` file are ignored from this plugin.
+In a case that don't use the naming rules for test file, it's better for you to use  [ignoring Code](https://eslint.org/docs/user-guide/configuring/ignoring-code#ignorepatterns-in-config-files) and ignore test directory.
 
 ```javascript
 // app.js

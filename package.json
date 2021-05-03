@@ -3,6 +3,13 @@
   "version": "0.1.1",
   "description": "Import relation linting rule for ESLint.",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YutamaKotaro/eslint-plugin-dependencies-relation"
+  },
+  "bugs": {
+    "url": "https://github.com/YutamaKotaro/eslint-plugin-dependencies-relation/issues"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
@@ -25,7 +32,6 @@
     "@types/node": "^14.14.41",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/experimental-utils": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-import": "^2.22.1",
