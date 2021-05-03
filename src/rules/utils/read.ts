@@ -1,5 +1,7 @@
 import * as fs from 'fs'
 import extract from 'extract-comments'
+import {TSESTree, AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
+
 // @ts-ignore
 import {cashComment, CommentInfo} from "./cash";
 import {shallowResolve} from "./resolve";
@@ -78,6 +80,29 @@ export function parseFilePaths(str: string, basePath: string): string[] {
   return results
 }
 
+export type ExtractedRequireStatement = {
+  requireStatement: true
+  path: string
+}
+const otherStatement = {
+  requireStatement: false
+}
+export function extractRequireStatement(node: TSESTree.VariableDeclaration): ExtractedRequireStatement | typeof otherStatement {
+  const declaration = node.declarations?.[0]
+  const type = declaration?.init?.type
+  if (!declaration || type !== AST_NODE_TYPES.CallExpression) return otherStatement
 
+  const callExpression = declaration.init as TSESTree.CallExpression
+  const identifier = callExpression.callee.type === AST_NODE_TYPES.Identifier && callExpression.callee
+  const isRequireStatement = identifier && identifier.name === 'require'
 
+  if (!isRequireStatement) return otherStatement
+
+  const path = callExpression.arguments?.[0].type === AST_NODE_TYPES.Literal ? `${callExpression.arguments?.[0].value}` : ''
+
+  return {
+    requireStatement: true,
+    path,
+  }
+}
 

@@ -57,7 +57,7 @@ To make sure detail, please see [this doc](docs/rules/import.md).
 Let's say there are three directories and files.
 
 ```json
-┝ app.js
+┝ app.ts
 ┝ repository
 │　　└ index.ts
 └ infrastracture

@@ -6,6 +6,7 @@ export function getFilePath(relativePath: string) {
   return path.join(process.cwd(), './tests/files', relativePath);
 }
 
+const extensions = ['.ts', '.tsx', '.js', '.jsx']
 export function createOption(baseFile: string) {
   const filename = getFilePath(baseFile)
   const parserOptions = {
@@ -15,7 +16,7 @@ export function createOption(baseFile: string) {
   const settings = {
     'import/resolver': {
       'node': {
-        'extensions': ['.ts', '.tsx', '.js', '.jsx']
+        extensions,
       }
     }
   }

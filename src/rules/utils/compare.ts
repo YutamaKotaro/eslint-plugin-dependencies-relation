@@ -13,7 +13,7 @@ export function compare(
   commentInfo: CommentInfo,
   /* eslint @typescript-eslint/no-explicit-any: 0, @typescript-eslint/explicit-module-boundary-types:0 */
   context: any,
-  node: TSESTree.ImportDeclaration
+  reportFilePath: string
 ): SafeResult | ErrorResult {
   const {
     allowPath,
@@ -29,8 +29,7 @@ export function compare(
   for (const _alloOnlypath of allowPath) {
     const reg = new RegExp(String.raw`^${_alloOnlypath}*`)
     if (!reg.test(baseFile)) {
-      const sourceCode = context.getSourceCode()
-      const error = createErrorMessage(sourceCode.getText(node.source))
+      const error = createErrorMessage(reportFilePath)
 
       return {
         existError: true,

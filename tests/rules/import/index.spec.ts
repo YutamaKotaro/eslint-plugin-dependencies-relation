@@ -1,12 +1,12 @@
 import {RuleTester} from 'eslint'
-import {dependencyRelation} from "../../../src/rules/import";
+import {importLimitation} from "../../../src/rules/import";
 import {createJsOption, createTsOption, createJsxOption, createTsxOption, createOption} from "../../utils/test";
 import {createErrorMessage} from "../../../src/rules/utils/compare";
 
 const ruleTester = new RuleTester()
 
 // @ts-ignore
-ruleTester.run('import/js-simple-path case', dependencyRelation, {
+ruleTester.run('import/js-simple-path case', importLimitation, {
   valid: [{
     ...createJsOption(),
     code: `
@@ -18,12 +18,12 @@ ruleTester.run('import/js-simple-path case', dependencyRelation, {
     code: `
       import {test} from './js/forbid';
     `,
-    errors: [{ message: createErrorMessage("'./js/forbid'") }]
+    errors: [{ message: createErrorMessage("./js/forbid") }]
   }]
 })
 
 // @ts-ignore
-ruleTester.run('import/jsx-simple-path case', dependencyRelation, {
+ruleTester.run('import/jsx-simple-path case', importLimitation, {
   valid: [{
     ...createJsxOption(),
     code: `
@@ -35,13 +35,13 @@ ruleTester.run('import/jsx-simple-path case', dependencyRelation, {
     code: `
       import {test} from './js/jsx/forbid';
     `,
-    errors: [{ message: createErrorMessage("'./js/jsx/forbid'") }]
+    errors: [{ message: createErrorMessage("./js/jsx/forbid") }]
   }]
 })
 
 
 // @ts-ignore
-ruleTester.run('import/ts-simple-path case', dependencyRelation, {
+ruleTester.run('import/ts-simple-path case', importLimitation, {
   valid: [{
     ...createTsOption(),
     code: `
@@ -53,12 +53,12 @@ ruleTester.run('import/ts-simple-path case', dependencyRelation, {
     code: `
       import {test} from './ts/forbid';
     `,
-    errors: [{ message: createErrorMessage("'./ts/forbid'") }]
+    errors: [{ message: createErrorMessage("./ts/forbid") }]
   }]
 })
 
 // @ts-ignore
-ruleTester.run('import/tsx-simple-path case', dependencyRelation, {
+ruleTester.run('import/tsx-simple-path case', importLimitation, {
   valid: [{
     ...createTsxOption(),
     code: `
@@ -70,12 +70,12 @@ ruleTester.run('import/tsx-simple-path case', dependencyRelation, {
     code: `
       import {test} from './ts/tsx/forbid';
     `,
-    errors: [{ message: createErrorMessage("'./ts/tsx/forbid'") }]
+    errors: [{ message: createErrorMessage("./ts/tsx/forbid") }]
   }]
 })
 
 // @ts-ignore
-ruleTester.run('import/*.test.js|ts ignore patterning',dependencyRelation, {
+ruleTester.run('import/*.(test|spec)(.js|.ts) ignore patterning',importLimitation, {
   valid: [{
     ...createOption('a.test.js'),
     code: `

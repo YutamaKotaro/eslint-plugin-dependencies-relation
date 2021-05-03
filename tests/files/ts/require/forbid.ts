@@ -1,4 +1,4 @@
 // @dependency-relation: allow: ./app.ts
-export function test() {
+module.exports = function test() {
 
 }

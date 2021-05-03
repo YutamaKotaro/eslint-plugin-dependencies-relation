@@ -1,8 +1,10 @@
 import {importLimitation} from "./rules/import";
+import {requireLimitation} from "./rules/require";
 
 export = {
   rules: {
     import: importLimitation,
+    require: requireLimitation
   },
   configs: {
     recommended: {
