@@ -1,27 +1,27 @@
-import {importLimitation} from "./rules/import";
-import {requireLimitation} from "./rules/require";
+import { importLimitation } from './rules/import'
+import { requireLimitation } from './rules/require'
 
 const rules = {
   'dependency-relation/import': 2,
-  'dependency-relation/require': 2
+  'dependency-relation/require': 2,
 }
 
 export = {
   rules: {
     import: importLimitation,
-    require: requireLimitation
+    require: requireLimitation,
   },
   configs: {
     preset: {
       rules,
       parser: '@typescript-eslint/parser',
       settings: {
-        "import/resolver": {
+        'import/resolver': {
           node: {
-            "extensions": [".ts", ".tsx", ".js", ".jsx"]
-          }
-        }
-      }
+            extensions: ['.ts', '.tsx', '.js', '.jsx'],
+          },
+        },
+      },
     },
     presetJs: {
       rules,
@@ -29,12 +29,12 @@ export = {
     presetVue: {
       rules,
       settings: {
-        "import/resolver": {
+        'import/resolver': {
           node: {
-            "extensions": [".ts", ".tsx", ".js", ".jsx", ".vue"]
-          }
-        }
-      }
-    }
-  }
+            extensions: ['.ts', '.tsx', '.js', '.jsx', '.vue'],
+          },
+        },
+      },
+    },
+  },
 }

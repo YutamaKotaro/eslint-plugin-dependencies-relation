@@ -1,4 +1,4 @@
-import {CommentInfo} from "./cash";
+import { CommentInfo } from './cash'
 
 type SafeResult = {
   existError: false
@@ -17,13 +17,10 @@ export function compare(
     type: 'import' | 'require'
   }
 ): SafeResult | ErrorResult {
-  const {
-    allowPath,
-    noRestriction
-  } = commentInfo
+  const { allowPath, noRestriction } = commentInfo
   if (!allowPath || noRestriction) {
     return {
-      existError: false
+      existError: false,
     }
   }
 
@@ -41,10 +38,13 @@ export function compare(
   }
 
   return {
-    existError: false
+    existError: false,
   }
 }
 
-export function createErrorMessage(path: string, type: 'import' | 'require' = 'import'): string {
+export function createErrorMessage(
+  path: string,
+  type: 'import' | 'require' = 'import'
+): string {
   return `${type} path ${path} is not allowed from this file`
 }

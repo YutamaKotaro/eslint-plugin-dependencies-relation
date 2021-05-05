@@ -1,10 +1,14 @@
-import { TSESLint } from "@typescript-eslint/experimental-utils";
+import { TSESLint } from '@typescript-eslint/experimental-utils'
 // @ts-ignore
 import resolve from 'eslint-module-utils/resolve'
-import {readComment, extractRequireStatement, ExtractedRequireStatement} from "../../utils/read";
-import {contextCash} from "../../utils/cash";
-import {compare} from "../../utils/compare";
-import {ignoreFile} from "../../utils/fileChecker";
+import {
+  readComment,
+  extractRequireStatement,
+  ExtractedRequireStatement,
+} from '../../utils/read'
+import { contextCash } from '../../utils/cash'
+import { compare } from '../../utils/compare'
+import { ignoreFile } from '../../utils/fileChecker'
 
 /*
     specification
@@ -14,20 +18,20 @@ import {ignoreFile} from "../../utils/fileChecker";
         @Todo: in this time, found specified comment path error (not resolved)
     3. decide whether error exists by comparing context path with required path
  */
-export const requireLimitation:TSESLint.RuleModule<"require", unknown[]> = {
+export const requireLimitation: TSESLint.RuleModule<'require', unknown[]> = {
   meta: {
-    type: "problem",
+    type: 'problem',
     docs: {
-      category: "Possible Errors",
-      description: "require relation linting rule for ESLint.",
-      recommended: "error",
-      url: "",
+      category: 'Possible Errors',
+      description: 'require relation linting rule for ESLint.',
+      recommended: 'error',
+      url: '',
     },
     messages: {
-      require: "Import relation linting rule for ESLint",
+      require: 'Import relation linting rule for ESLint',
     },
     schema: [],
-    fixable: "code",
+    fixable: 'code',
   },
   create(context) {
     contextCash.init(context)
@@ -38,21 +42,28 @@ export const requireLimitation:TSESLint.RuleModule<"require", unknown[]> = {
         const ignore = ignoreFile(context.getFilename())
         if (ignore || !requireStatementInfo.requireStatement) return
 
-        const resolvedPath = resolve((requireStatementInfo as ExtractedRequireStatement).path, context)
+        const resolvedPath = resolve(
+          (requireStatementInfo as ExtractedRequireStatement).path,
+          context
+        )
         if (!resolvedPath || /.*\/node_modules\/.*/.test(resolvedPath)) return
         // 2.
         const commentInfo = readComment(resolvedPath)
         // 3.
-        const result = compare(commentInfo, context, (requireStatementInfo as ExtractedRequireStatement).path, { type: 'require' })
+        const result = compare(
+          commentInfo,
+          context,
+          (requireStatementInfo as ExtractedRequireStatement).path,
+          { type: 'require' }
+        )
         if (result.existError) {
           context.report({
             node,
             // @ts-ignore
-            message: result.error
+            message: result.error,
           })
         }
-      }
+      },
     }
-  }
+  },
 }
-

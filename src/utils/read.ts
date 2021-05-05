@@ -1,11 +1,10 @@
 import * as fs from 'fs'
 import extractComments from 'extract-comments'
-import {TSESTree, AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
+import { TSESTree, AST_NODE_TYPES } from '@typescript-eslint/experimental-utils'
 
 // @ts-ignore
-import {cashComment, CommentInfo} from "./cash";
-import {shallowResolve} from "./resolve";
-
+import { cashComment, CommentInfo } from './cash'
+import { shallowResolve } from './resolve'
 
 export function readComment(path: string): CommentInfo {
   let commentInfo = cashComment.getComment(path)
@@ -43,13 +42,13 @@ export function createCommentInfo(filePath: string): CommentInfo {
     if (reg.test(textedComment)) {
       needToCheck = true
       specifiedComment = textedComment
-      break;
+      break
     }
   }
 
   if (!needToCheck) {
     return {
-      noRestriction: true
+      noRestriction: true,
     }
   }
   const args = specifiedComment.split(':')
@@ -97,24 +96,31 @@ export type ExtractedRequireStatement = {
   path: string
 }
 const otherStatement = {
-  requireStatement: false
+  requireStatement: false,
 }
-export function extractRequireStatement(node: TSESTree.VariableDeclaration): ExtractedRequireStatement | typeof otherStatement {
+export function extractRequireStatement(
+  node: TSESTree.VariableDeclaration
+): ExtractedRequireStatement | typeof otherStatement {
   const declaration = node.declarations?.[0]
   const type = declaration?.init?.type
-  if (!declaration || type !== AST_NODE_TYPES.CallExpression) return otherStatement
+  if (!declaration || type !== AST_NODE_TYPES.CallExpression)
+    return otherStatement
 
   const callExpression = declaration.init as TSESTree.CallExpression
-  const identifier = callExpression.callee.type === AST_NODE_TYPES.Identifier && callExpression.callee
+  const identifier =
+    callExpression.callee.type === AST_NODE_TYPES.Identifier &&
+    callExpression.callee
   const isRequireStatement = identifier && identifier.name === 'require'
 
   if (!isRequireStatement) return otherStatement
 
-  const path = callExpression.arguments?.[0].type === AST_NODE_TYPES.Literal ? `${callExpression.arguments?.[0].value}` : ''
+  const path =
+    callExpression.arguments?.[0].type === AST_NODE_TYPES.Literal
+      ? `${callExpression.arguments?.[0].value}`
+      : ''
 
   return {
     requireStatement: true,
     path,
   }
 }
-

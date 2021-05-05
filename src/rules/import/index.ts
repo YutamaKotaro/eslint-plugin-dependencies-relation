@@ -1,10 +1,10 @@
-import { TSESLint } from "@typescript-eslint/experimental-utils";
+import { TSESLint } from '@typescript-eslint/experimental-utils'
 // @ts-ignore
 import resolve from 'eslint-module-utils/resolve'
-import {readComment} from "../../utils/read";
-import {contextCash} from "../../utils/cash";
-import {compare} from "../../utils/compare";
-import {ignoreFile} from "../../utils/fileChecker";
+import { readComment } from '../../utils/read'
+import { contextCash } from '../../utils/cash'
+import { compare } from '../../utils/compare'
+import { ignoreFile } from '../../utils/fileChecker'
 
 /*
     specification
@@ -14,20 +14,20 @@ import {ignoreFile} from "../../utils/fileChecker";
         @Todo: in this time, found specified comment path error (not resolved)
     3. decide whether error exists by comparing context path with imported path
  */
-export const importLimitation:TSESLint.RuleModule<"import", unknown[]> = {
+export const importLimitation: TSESLint.RuleModule<'import', unknown[]> = {
   meta: {
-    type: "problem",
+    type: 'problem',
     docs: {
-      category: "Possible Errors",
-      description: "Import relation linting rule for ESLint.",
-      recommended: "error",
-      url: "",
+      category: 'Possible Errors',
+      description: 'Import relation linting rule for ESLint.',
+      recommended: 'error',
+      url: '',
     },
     messages: {
-      import: "Import relation linting rule for ESLint",
+      import: 'Import relation linting rule for ESLint',
     },
     schema: [],
-    fixable: "code",
+    fixable: 'code',
   },
   create(context) {
     contextCash.init(context)
@@ -42,16 +42,17 @@ export const importLimitation:TSESLint.RuleModule<"import", unknown[]> = {
         // 2.
         const commentInfo = readComment(resolvedPath)
         // 3.
-        const result = compare(commentInfo, context, `${filePath}`, { type: 'import' })
+        const result = compare(commentInfo, context, `${filePath}`, {
+          type: 'import',
+        })
         if (result.existError) {
           context.report({
             node,
             // @ts-ignore
-            message: result.error
+            message: result.error,
           })
         }
-      }
+      },
     }
-  }
+  },
 }
-

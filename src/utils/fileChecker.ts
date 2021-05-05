@@ -4,4 +4,3 @@ export function ignoreFile(filePath: string): boolean {
 
   return reg.test(filePath)
 }
-

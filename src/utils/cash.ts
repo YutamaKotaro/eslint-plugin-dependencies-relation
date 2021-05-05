@@ -1,5 +1,4 @@
-import { TSESLint } from "@typescript-eslint/experimental-utils";
-
+import { TSESLint } from '@typescript-eslint/experimental-utils'
 
 export type CommentInfo = {
   noRestriction: boolean

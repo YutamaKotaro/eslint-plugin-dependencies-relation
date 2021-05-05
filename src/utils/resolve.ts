@@ -1,4 +1,4 @@
-import {resolve} from 'path'
+import { resolve } from 'path'
 
 export function shallowResolve(fromPath: string, toPath: string): string {
   const fromPaths = fromPath.split('/')
