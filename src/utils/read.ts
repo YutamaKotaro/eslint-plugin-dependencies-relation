@@ -1,10 +1,11 @@
 import * as fs from 'fs'
-import extract from 'extract-comments'
+import extractComments from 'extract-comments'
 import {TSESTree, AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
 
 // @ts-ignore
 import {cashComment, CommentInfo} from "./cash";
 import {shallowResolve} from "./resolve";
+
 
 export function readComment(path: string): CommentInfo {
   let commentInfo = cashComment.getComment(path)
@@ -27,7 +28,7 @@ export function createCommentInfo(filePath: string): CommentInfo {
   // read file
   const file = fs.readFileSync(filePath)
   const commentString = file.toString()
-  const extractedComment = extract(commentString)
+  const extractedComment = extract(commentString, filePath)
 
   if (extractedComment.length === 0) {
     return {
@@ -59,6 +60,17 @@ export function createCommentInfo(filePath: string): CommentInfo {
     noRestriction: false,
     allowPath: filePaths,
   }
+}
+
+const VUE_REG = /.*(.vue)$/
+const VUE_SCRIPT = /<script[\s\S]*?>([\s\S]*?)<\/script>/
+function extract(fileStr: string, filePath: string) {
+  let source = fileStr
+  const vueFile = VUE_REG.test(filePath)
+  if (vueFile) {
+    source = VUE_SCRIPT.exec(source)?.[1] || ''
+  }
+  return extractComments(source)
 }
 
 /*

@@ -25,6 +25,16 @@ export = {
     },
     presetJs: {
       rules,
+    },
+    presetVue: {
+      rules,
+      settings: {
+        "import/resolver": {
+          node: {
+            "extensions": [".ts", ".tsx", ".js", ".jsx", ".vue"]
+          }
+        }
+      }
     }
   }
 }

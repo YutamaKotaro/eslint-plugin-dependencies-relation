@@ -1,7 +1,7 @@
 import {RuleTester} from 'eslint'
 import {importLimitation} from "../../../src/rules/import";
-import {createJsOption, createTsOption, createJsxOption, createTsxOption, createOption} from "../../utils/test";
-import {createErrorMessage} from "../../../src/rules/utils/compare";
+import {createJsOption, createTsOption, createJsxOption, createTsxOption, createOption, createVueOption} from "../../utils/test";
+import {createErrorMessage} from "../../../src/utils/compare";
 
 const ruleTester = new RuleTester()
 
@@ -12,6 +12,11 @@ ruleTester.run('import/js-simple-path case', importLimitation, {
     code: `
       import {test} from './js/app';
      `,
+  }, {
+    ...createJsOption(),
+    code: `
+      import {test} from './js/allow';
+    `
   }],
   invalid: [{
     ...createJsOption(),
@@ -29,6 +34,11 @@ ruleTester.run('import/jsx-simple-path case', importLimitation, {
     code: `
       import {test} from './js/jsx/app';
      `,
+  }, {
+    ...createJsxOption(),
+    code: `
+      import {test} from './js/jsx/allow';
+    `
   }],
   invalid: [{
     ...createJsxOption(),
@@ -47,6 +57,11 @@ ruleTester.run('import/ts-simple-path case', importLimitation, {
     code: `
       import {test} from './ts/app';
      `,
+  }, {
+    ...createTsOption(),
+    code: `
+      import {test} from './ts/allow';
+     `,
   }],
   invalid: [{
     ...createTsOption(),
@@ -63,6 +78,11 @@ ruleTester.run('import/tsx-simple-path case', importLimitation, {
     ...createTsxOption(),
     code: `
       import {test} from './ts/tsx/app';
+     `,
+  }, {
+    ...createTsxOption(),
+    code: `
+      import {test} from './ts/tsx/allow';
      `,
   }],
   invalid: [{
@@ -101,3 +121,33 @@ ruleTester.run('import/*.(test|spec)(.js|.ts) ignore patterning',importLimitatio
   invalid: []
 })
 
+// @ts-ignore
+ruleTester.run('import/vue-simple-path', importLimitation, {
+  valid: [{
+    ...createVueOption(),
+    code: `
+      <template><div>base</div></template>
+      <script>
+        import Test from './vue/app.vue'
+      </script>
+    `
+  }, {
+    ...createVueOption(),
+    code: `
+          <template><div>base</div></template>
+      <script>
+        import Test from './vue/allow.vue'
+      </script>
+    `
+  }],
+  invalid:[{
+    ...createVueOption(),
+    code: `
+      <template><div>base</div></template>
+      <script>
+        import Test from './vue/forbid.vue'
+      </script>
+    `,
+    errors: [{ message: createErrorMessage('./vue/forbid.vue')}]
+  }]
+})

@@ -1,7 +1,7 @@
 import {RuleTester} from "eslint";
 import {requireLimitation} from "../../../src/rules/require";
 import {createJsOption, createOption, createTsOption} from "../../utils/test";
-import {createErrorMessage} from "../../../src/rules/utils/compare";
+import {createErrorMessage} from "../../../src/utils/compare";
 import {importLimitation} from "../../../src/rules/import";
 
 const ruleTester = new RuleTester()

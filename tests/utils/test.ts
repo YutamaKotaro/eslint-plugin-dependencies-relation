@@ -1,18 +1,13 @@
 import * as path from 'path'
 import {create} from "domain";
 
-
 export function getFilePath(relativePath: string) {
   return path.join(process.cwd(), './tests/files', relativePath);
 }
 
-const extensions = ['.ts', '.tsx', '.js', '.jsx']
-export function createOption(baseFile: string) {
+const extensions = ['.ts', '.tsx', '.js', '.jsx', '.vue']
+export function createOption(baseFile: string, options?: any) {
   const filename = getFilePath(baseFile)
-  const parserOptions = {
-    sourceType: 'module',
-    ecmaVersion: 11,
-  }
   const settings = {
     'import/resolver': {
       'node': {
@@ -23,8 +18,9 @@ export function createOption(baseFile: string) {
 
   return {
     filename,
-    parserOptions,
+    parser: require.resolve('@typescript-eslint/parser'),
     settings,
+    ...(options || {}),
   }
 }
 export function createJsOption() {
@@ -38,4 +34,16 @@ export function createJsxOption() {
 }
 export function createTsxOption() {
   return createOption('base.tsx')
+}
+export function createVueOption(fileName?: string) {
+  return createOption(fileName || 'base.vue', {
+    parserOptions: {
+      parser: require.resolve('@typescript-eslint/parser'),
+      extraFileExtensions: extensions,
+      ecmaFeatures: {
+        jsx: true
+      }
+    },
+    parser: require.resolve('vue-eslint-parser'),
+  })
 }

@@ -1,6 +1,11 @@
 # eslint-plugin-dependency-relation
 Import relation linting rule for ESLint.  
-Can also use this in typescript.
+Can use this in.
+
+- JavaScript Project
+- TypeScript Project
+- React Project
+- Vue Project
 
 ## Installation
 Install [ESLint](https://github.com/eslint/eslint) before using this plugin please.
@@ -17,6 +22,9 @@ npm install eslint-plugin-dependency-relation -D
 ```
 
 ## Configuration
+- for js Project
+- for ts Project(including React Project)
+- for vue project
 
 ### for js project
 You can use this plugin by adding below info to `.eslintrc`.
@@ -48,7 +56,22 @@ You can use this plugin by adding below properties to `.eslintrc`.
 }
 ```
 
-If you'd like to do manual configuration, please see this section [doc](## Manual Configuration(ts)).
+If you'd like to do manual configuration, please see Manual Configuration(ts) section.
+
+### for vue project
+If you'd like this plugin in your vue project.
+You need to add some properties to `.eslintrc` like this.
+
+```json
+{
+  "plugins": ["dependency-relation"],
+  "extends": [
+    "@vue/typescript/recommended",
+    "plugin:dependency-relation/presetVue"
+  ]
+}
+```
+
 
 ## Rules
 ### import

@@ -1,10 +1,10 @@
 import { TSESLint } from "@typescript-eslint/experimental-utils";
 // @ts-ignore
 import resolve from 'eslint-module-utils/resolve'
-import {readComment} from "../utils/read";
-import {contextCash} from "../utils/cash";
-import {compare} from "../utils/compare";
-import {ignoreFile} from "../utils/fileChecker";
+import {readComment} from "../../utils/read";
+import {contextCash} from "../../utils/cash";
+import {compare} from "../../utils/compare";
+import {ignoreFile} from "../../utils/fileChecker";
 
 /*
     specification
@@ -38,7 +38,7 @@ export const importLimitation:TSESLint.RuleModule<"import", unknown[]> = {
         const ignore = ignoreFile(context.getFilename())
         if (ignore) return
         const resolvedPath = resolve(filePath, context)
-        if (!resolvedPath) return
+        if (!resolvedPath || /.*\/node_modules\/.*/.test(resolvedPath)) return
         // 2.
         const commentInfo = readComment(resolvedPath)
         // 3.
