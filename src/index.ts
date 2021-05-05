@@ -15,7 +15,6 @@ export = {
     preset: {
       rules,
       parser: '@typescript-eslint/parser',
-      parserOptions: { sourceType: 'module' },
       settings: {
         "import/resolver": {
           node: {
