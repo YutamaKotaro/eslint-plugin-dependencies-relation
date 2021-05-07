@@ -1,0 +1,4 @@
+{
+  "plugins": ["dependency-relation"],
+  "extends": ["plugin:dependency-relation/preset"]
+}
