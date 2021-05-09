@@ -9,6 +9,7 @@ import {
 import { contextCash } from '../../utils/cash'
 import { compare } from '../../utils/compare'
 import { ignoreFile } from '../../utils/fileChecker'
+import {STATEMENT_TYPES} from "../../utils/constants";
 
 /*
     specification
@@ -54,7 +55,7 @@ export const requireLimitation: TSESLint.RuleModule<'require', unknown[]> = {
           commentInfo,
           context,
           (requireStatementInfo as ExtractedRequireStatement).path,
-          { type: 'require' }
+          { type: STATEMENT_TYPES.REQUIRE }
         )
         if (result.existError) {
           context.report({
