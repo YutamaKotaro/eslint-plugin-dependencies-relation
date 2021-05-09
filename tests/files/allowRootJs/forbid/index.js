@@ -1,2 +1,2 @@
-// @dependency-relation: allow@root: ../app.js
+// @dependency-relation: allow@root: ../app
 export function forbid() {}

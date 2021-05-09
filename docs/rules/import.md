@@ -37,7 +37,7 @@ import infrastracture from './infrastracture';
 On the other hand, repository directory's file can import this file.
 
 ```javascript
-// repository/index.js
+// repository/index.jsx
 import infrastructure from './infrastracture';
 // no Error
 ```

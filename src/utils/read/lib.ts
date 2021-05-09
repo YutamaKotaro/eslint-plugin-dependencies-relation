@@ -57,7 +57,7 @@ const otherStatement = {
   parse string path
     e.g
       arg1: './test.js ./test2.js'
-      arg2: 'hoge/fuga/index.js'
+      arg2: 'hoge/fuga/index.jsx'
       return: ['hoge/fuga/test.js', 'hoge/fuga/test2.js']
  */
 export function extractRequireStatement(

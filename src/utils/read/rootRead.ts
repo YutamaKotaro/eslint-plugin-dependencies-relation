@@ -32,7 +32,6 @@ export function createRootCommentInfo(filePath: string): RootCommentInfo {
   }
   const { fileStrings, option } = parseArgStrings(extractedComment)
   const filePaths = parseFilePaths(fileStrings, filePath)
-
   return {
     type: option,
     noRestriction: false,

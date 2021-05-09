@@ -40,7 +40,16 @@ export const importLimitation: TSESLint.RuleModule<'import', unknown[]> = {
         const ignore = ignoreFile(context.getFilename())
         if (ignore) return
         const resolvedPath = resolve(filePath, context)
-        if (!resolvedPath || /.*\/node_modules\/.*/.test(resolvedPath)) return
+        if (!resolvedPath) {
+          context.report({
+            node,
+            // @ts-ignore
+            message: `${filePath} is not resolved`,
+          })
+          return
+        }
+
+        if (/.*\/node_modules\/.*/.test(resolvedPath)) return
         // 2.
         const rootCommentInfo = readRootCommentInfo(resolvedPath)
         const commentInfo = readComment(resolvedPath)

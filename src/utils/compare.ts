@@ -31,11 +31,11 @@ export function compare(
       existError: false,
     }
   }
-
   const baseFile: string = context.getFilename()
   const allowFilePaths = createAllowFilePath(commentInfo, rootCommentInfo)
+
   for (const _alloOnlypath of allowFilePaths) {
-    const reg = new RegExp(String.raw`^${_alloOnlypath}*`)
+    const reg = new RegExp(String.raw`^${_alloOnlypath}.*`)
     if (!reg.test(baseFile)) {
       const error = createErrorMessage(reportFilePath, option.type)
 
