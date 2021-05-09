@@ -1,6 +1,6 @@
 import { RuleTester } from 'eslint'
 import { importLimitation } from '../../../src/rules/import'
-import { createJsOption } from '../../utils/test'
+import { createJsOption, createVueOption } from '../../utils/test'
 import { createErrorMessage } from '../../../src/utils/compare'
 
 const ruleTester = new RuleTester()
@@ -72,6 +72,78 @@ ruleTester.run('import/jsx-allow-root-path case', importLimitation, {
       `,
       errors: [
         { message: createErrorMessage('./allowRootJs/jsx/forbid/utils') },
+      ],
+    },
+  ],
+})
+
+// @ts-ignore
+ruleTester.run('import/ts-allow-root-path case', importLimitation, {
+  valid: [
+    {
+      ...createJsOption('./allowRootTs/app.ts'),
+      code: `
+      import {test} from './forbid/utils';
+    `,
+    },
+    {
+      ...createJsOption('./allowRootTs/app.ts'),
+      code: `
+            import {test} from './forbid';
+      `,
+    },
+  ],
+  invalid: [
+    {
+      ...createJsOption(),
+      code: `
+      import {test} from './allowRootTs/forbid/utils';
+    `,
+      errors: [{ message: createErrorMessage('./allowRootTs/forbid/utils') }],
+    },
+    {
+      ...createJsOption(),
+      code: `
+            import {test} from './allowRootTs/forbid';
+      `,
+      errors: [{ message: createErrorMessage('./allowRootTs/forbid') }],
+    },
+  ],
+})
+
+// @ts-ignore
+ruleTester.run('import/tsx-allow-root-path case', importLimitation, {
+  valid: [
+    {
+      ...createJsOption('./allowRootTs/tsx/app.tsx'),
+      code: `
+      import {test} from './forbid/utils';
+    `,
+    },
+    {
+      ...createJsOption('./allowRootTs/tsx/app.tsx'),
+      code: `
+            import {test} from './forbid';
+      `,
+    },
+  ],
+  invalid: [
+    {
+      ...createJsOption(),
+      code: `
+      import {test} from './allowRootTs/tsx/forbid/utils';
+    `,
+      errors: [
+        { message: createErrorMessage('./allowRootTs/tsx/forbid/utils') },
+      ],
+    },
+    {
+      ...createJsOption(),
+      code: `
+            import {test} from './allowRootTs/tsx/forbid/utils';
+      `,
+      errors: [
+        { message: createErrorMessage('./allowRootTs/tsx/forbid/utils') },
       ],
     },
   ],

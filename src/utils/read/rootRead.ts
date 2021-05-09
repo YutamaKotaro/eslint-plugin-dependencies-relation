@@ -4,7 +4,7 @@ import { contextCash, rootComment, RootCommentInfo } from '../cash'
 import { extract, parseFilePaths, parseArgStrings } from './lib'
 import { TYPES } from '../constants'
 
-export function readRootCommentInfo(filePath: string) {
+export function readRootCommentInfo(filePath: string): RootCommentInfo {
   const indexFilePath = getIndexFilePath(filePath)
   if (!indexFilePath) {
     return {
@@ -39,7 +39,7 @@ export function createRootCommentInfo(filePath: string): RootCommentInfo {
   }
 }
 
-export function getIndexFilePath(filePath: string) {
+export function getIndexFilePath(filePath: string): string {
   const context = contextCash.get()
   const _dirName = filePath.split('/')
   _dirName.pop()

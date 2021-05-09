@@ -87,7 +87,12 @@ export function extractRequireStatement(
   }
 }
 
-export function parseArgStrings(argString: string) {
+export function parseArgStrings(
+  argString: string
+): {
+  fileStrings: string
+  option: T_TYPES
+} {
   const args = argString.split(':')
   const fileStrings = args[2]
   const option = args[1].replace(/ /g, '') as T_TYPES

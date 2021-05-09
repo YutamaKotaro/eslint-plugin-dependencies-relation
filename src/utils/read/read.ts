@@ -1,6 +1,4 @@
 import { extract, parseFilePaths, parseArgStrings } from './lib'
-// @ts-ignore
-import resolve from 'eslint-module-utils/resolve'
 import { cashComment, CommentInfo } from '../cash'
 
 // Note: files limited are just only file, if try to apply file and directory.... performance will become worse.

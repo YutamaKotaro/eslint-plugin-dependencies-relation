@@ -1,6 +1,5 @@
 import { CommentInfo, RootCommentInfo } from './cash'
 import { STATEMENT_TYPES, T_STATEMENT_TYPES, TYPES } from './constants'
-import { create } from 'domain'
 
 type SafeResult = {
   existError: false
