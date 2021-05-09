@@ -7,7 +7,14 @@ const ruleTester = new RuleTester()
 
 // @ts-ignore
 ruleTester.run('import/js-allow-root-path case', importLimitation, {
-  valid: [],
+  valid: [
+    {
+      ...createJsOption('files/app.js'),
+      code: `
+      import {test} from './allowRootJs/forbid/utils';
+    `,
+    },
+  ],
   invalid: [
     {
       ...createJsOption(),

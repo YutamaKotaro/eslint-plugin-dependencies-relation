@@ -12,7 +12,6 @@ const VUE_SCRIPT = /<script[\s\S]*?>([\s\S]*?)<\/script>/
 export function extract(filePath: string): string | null {
   const file = fs.readFileSync(filePath)
   let source = file.toString()
-
   // for Vue
   const vueFile = VUE_REG.test(filePath)
   if (vueFile) {

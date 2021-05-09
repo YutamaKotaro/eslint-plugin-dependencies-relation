@@ -6,6 +6,12 @@ import { TYPES } from '../constants'
 
 export function readRootCommentInfo(filePath: string) {
   const indexFilePath = getIndexFilePath(filePath)
+  if (!indexFilePath) {
+    return {
+      noRestriction: true,
+      type: TYPES.NONE,
+    }
+  }
   let rootCommentInfo = rootComment.getComment(indexFilePath)
 
   if (!rootCommentInfo) {
