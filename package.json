@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-dependency-relation",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Import relation linting rule for ESLint.",
   "main": "dist/index.js",
   "repository": {
