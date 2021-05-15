@@ -25,6 +25,8 @@ This plugin has three options.
 |allow@root| This option is available in index file. Written rule is inherited by other files in same dir.|
 |allowOnly@root| This option is available in index file. This option forbids direct accessing besides index file.|
 
+Note: For now allow@root and allowOnly@root is effective for just only files in same dir. Hence, if dir exist, you have to write comment in index file of the dir (performance issue.)
+
 ## How to use
 Let's see how to use this plugin!!
 
