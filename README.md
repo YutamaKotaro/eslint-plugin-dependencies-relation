@@ -7,8 +7,32 @@ Can use this in.
 - React Project
 - Vue Project
 
+## Motivation
+The import relation is difficult to have being clean, because many developers join in development and every member don't necessarily know a lot about implicit import relation rules.
+Hence, even if you DID think of what is the best architect at beginning, someone will break the great rules one day, then someone who see it will also break rule, then someone..... ultimately import relation will become very complex like below.
+
+![relation](docs/img/relations.png)
+
+Since we're human, we have no choice.
+Instead, lets' use this eslint-plugin😀.
+
+This plugin protects the great rule you thought of, like below.
+
+```javascript
+// @dependency-relation: allow: ../app.js
+export function moduleA() {
+  
+}
+```
+
+This comment means this module is able to be imported just only from `../app.js` file, so if you try to import moduleA from any place besides the file(`../app.js`), this plugin will get mad at you and inform broken the great rule.
+
+```
+import path ../../moduleA is not allowed from this file  dependency-relation/import
+```
+
 ## Installation
-Install [ESLint](https://github.com/eslint/eslint) before using this plugin please.
+Install [ESLint](https://github.com/eslint/eslint) before using this plugin, please.
 To make sure how to install eslint, please visit [eslint page](https://github.com/eslint/eslint)
 
 ```
@@ -75,7 +99,7 @@ You need to add some properties to `.eslintrc` like this.
 
 ## Rules
 ### import
-To make sure detail, please see [this doc](https://github.com/YutamaKotaro/eslint-plugin-dependencies-relation/blob/main/docs/rules/import.md).
+To make sure details, please see [this doc](https://github.com/YutamaKotaro/eslint-plugin-dependencies-relation/blob/main/docs/rules/import.md).
 `import` is the rule to limit importing file from a lot of location.
 
 Let's say there are two directories and three files.
@@ -89,20 +113,31 @@ Let's say there are two directories and three files.
     └ mysql.ts
 ```
 
-Besides, Let's say there are the rules you want to limit.
+In addition, let's say there are other rules you want to limit.
 
-- don't allow direct accessing `mysql.ts`. (e.g import {save} from './infrastracture/mysql').
-- instead of that, allow accessing `mysql` module via `index.ts`
-- don't allow accessing `infrastracture directory` besides `repository directory`
+![example](docs/img/example1.png)
 
-In these case, this plugin detects against the rules and show you.
+1. don't allow accessing `infrastracture directory` besides `repository directory`
+2. don't allow direct accessing `mysql.ts`. (e.g import {save} from './infrastracture/mysql'). Instead, allow accessing `mysql` module via `index.ts`
 
+#### write rule
+At first let's write rule, but all thing I'll introduce you are just only basic rule.
+
+To achieve rule 1 and rule2, we need to write comment in `infrastructure/index.ts`.
+
+```javascript
+// @dependency-relation: allowOnly@root: ../repository
 ```
-import path ../infrastructure is not allowed from this file  dependency-relation/import
-```
 
-To use this plugin, you have to write comment, detail is [here](https://github.com/YutamaKotaro/eslint-plugin-dependencies-relation/blob/main/docs/rules/import.md).
-Please make sure it.
+We're using `allonOnly@root` options in this example.
+This rule means
+- This directory's files arn't able to be imported except index file(`index.ts`)
+- This directory's files arn't able to be imported except `../repository` dir.
+
+Hence, it's oke to just only write this comment (it may be better to write comment in repository).
+
+I have a few useful option which has a lot of behaviors, please see details [details](https://github.com/YutamaKotaro/eslint-plugin-dependencies-relation/blob/main/docs/rules/import.md)
+
 
 ### require
 This rule is as same as import, but this rule expect requireSyntax instead of import.
