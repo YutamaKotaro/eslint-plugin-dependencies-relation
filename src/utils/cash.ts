@@ -4,6 +4,13 @@ export type CommentInfo = {
   noRestriction: boolean
   allowPath?: string[]
   errors?: string
+  filePath: string
+}
+export type RootCommentInfo = {
+  rootFilePath: string
+  noRestriction: boolean
+  type: 'allow' | 'allow@root' | 'allowOnly@root' | 'none'
+  filePath?: string[]
 }
 
 class CashComment {
@@ -17,8 +24,20 @@ class CashComment {
     this.store[key] = commentInfo
   }
 }
-
 export const cashComment = new CashComment()
+
+class RootComment {
+  public store: {
+    [key: string]: RootCommentInfo
+  } = {}
+  getComment(key: string): RootCommentInfo {
+    return this.store[key]
+  }
+  setComment(key: string, commentInfo: RootCommentInfo) {
+    this.store[key] = commentInfo
+  }
+}
+export const rootComment = new RootComment()
 
 type Context = TSESLint.RuleContext<string, unknown[]>
 class ContextCash {

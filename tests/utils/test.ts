@@ -1,8 +1,7 @@
 import * as path from 'path'
-import {create} from "domain";
 
 export function getFilePath(relativePath: string) {
-  return path.join(process.cwd(), './tests/files', relativePath);
+  return path.join(process.cwd(), './tests/files', relativePath)
 }
 
 const extensions = ['.ts', '.tsx', '.js', '.jsx', '.vue']
@@ -10,10 +9,10 @@ export function createOption(baseFile: string, options?: any) {
   const filename = getFilePath(baseFile)
   const settings = {
     'import/resolver': {
-      'node': {
+      node: {
         extensions,
-      }
-    }
+      },
+    },
   }
 
   return {
@@ -23,17 +22,17 @@ export function createOption(baseFile: string, options?: any) {
     ...(options || {}),
   }
 }
-export function createJsOption() {
-  return createOption('base.js')
+export function createJsOption(fileName?: string) {
+  return createOption(fileName ?? 'base.js')
 }
-export function createTsOption() {
-  return createOption('base.ts')
+export function createTsOption(fileName?: string) {
+  return createOption(fileName ?? 'base.ts')
 }
-export function createJsxOption() {
-  return createOption('base.jsx')
+export function createJsxOption(fileName?: string) {
+  return createOption(fileName ?? 'base.jsx')
 }
-export function createTsxOption() {
-  return createOption('base.tsx')
+export function createTsxOption(fileName?: string) {
+  return createOption(fileName ?? 'base.tsx')
 }
 export function createVueOption(fileName?: string) {
   return createOption(fileName || 'base.vue', {
@@ -41,8 +40,8 @@ export function createVueOption(fileName?: string) {
       parser: require.resolve('@typescript-eslint/parser'),
       extraFileExtensions: extensions,
       ecmaFeatures: {
-        jsx: true
-      }
+        jsx: true,
+      },
     },
     parser: require.resolve('vue-eslint-parser'),
   })

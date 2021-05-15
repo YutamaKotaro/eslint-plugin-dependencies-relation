@@ -5,10 +5,12 @@ import {
   readComment,
   extractRequireStatement,
   ExtractedRequireStatement,
+  readRootCommentInfo,
 } from '../../utils/read'
 import { contextCash } from '../../utils/cash'
 import { compare } from '../../utils/compare'
 import { ignoreFile } from '../../utils/fileChecker'
+import { STATEMENT_TYPES } from '../../utils/constants'
 
 /*
     specification
@@ -49,12 +51,14 @@ export const requireLimitation: TSESLint.RuleModule<'require', unknown[]> = {
         if (!resolvedPath || /.*\/node_modules\/.*/.test(resolvedPath)) return
         // 2.
         const commentInfo = readComment(resolvedPath)
+        const rootCommentInfo = readRootCommentInfo(resolvedPath)
         // 3.
         const result = compare(
           commentInfo,
+          rootCommentInfo,
           context,
           (requireStatementInfo as ExtractedRequireStatement).path,
-          { type: 'require' }
+          { type: STATEMENT_TYPES.REQUIRE }
         )
         if (result.existError) {
           context.report({
