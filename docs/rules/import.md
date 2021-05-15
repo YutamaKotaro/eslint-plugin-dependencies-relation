@@ -9,24 +9,44 @@ You can write limitation as comment in the file.
 
 Comment rules are just only three rules.
 
-- write `@dependency-relation: allow:` as comment
+- write `@dependency-relation: <option>: <file path>` as comment
 - file path is `relative path`
 - can specify files or directories
 
-Note: You don't have to specify test directory(e.g test and __test__ and so on and so forth), because `*.spec.*` and `*.test.*` file are ignored from this plugin (If you use this naming rule).
-In a case that don't use the naming(`*.test.*` or `*.spec.*`) rules for test file, it's better for you to use  [ignoring Code](https://eslint.org/docs/user-guide/configuring/ignoring-code#ignorepatterns-in-config-files) and ignore test directory.
+Note: You don't have to specify test directory (e.g test and __test__ and so on and so forth), because `*.spec.*` and `*.test.*` file are ignored from this plugin (If you use this naming rule).
+In a case that don't use this naming(`*.test.*` or `*.spec.*`) rules for test file, it's better for you to use  [ignoring Code](https://eslint.org/docs/user-guide/configuring/ignoring-code#ignorepatterns-in-config-files) and ignore test directory.
+
+### options
+This plugin has three options.
+
+|option name| description|
+|:--:|:---------:|
+|allow| Each file setting. Written rule is effective just only file where comment is written.|
+|allow@root| This option is available in index file. Written rule is inherited by other files in same dir.|
+|allowOnly@root| This option is available in index file. This option forbids direct accessing besides index file.|
+
+## How to use
+Let's see how to use this plugin!!
+
+You have to write rule as a comment at first.
 
 ```javascript
-// infrastructure.js  <- you don't need write this comment. This is mere showing file name in markdown.
+// infrastructure.js  <- you don't need write this comment. This is mere showing file name in doc.
 // @dependency-relation: allow: ./repository
 export default function() {
   
 }
 ```
 
-This comment means "It's just only repository directory's file to be allowed importing this file".
-Hence, if other file try to import this file, this plugin warns you against the rules.
-Of course, you can write comment as line or block.
+Let's remember syntax.
+
+```javascript
+// @dependency-relation: <option>: <file path>
+```
+
+In that comment, options is `allow` and file path is `./repository` (<- dir).
+Hence, that means "Just only repository directory's files are allowed to import this file".
+If other files try to import this file, this plugin warns you against the rules.
 
 ```javascript
 // app.js
@@ -48,49 +68,5 @@ To specify multi limitations, write like this.
 // @dependency-relation: allow: ./repository.js ./hoge.js ../utils
 ```
 
-UseCase is the best section to learn how to use this plugin.
-
-
-## useCase
-Let's say there are three directories and files.
-
-```json
-┝ app.js
-┝ repository
-│　　└ index.ts
-└ infrastracture
-    ┝ index.ts
-    └ mysql.ts
-```
-
-Besides, Let's say there are the rules you want to limit.
-
-- 1.don't allow direct accessing `mysql.ts`. (e.g import {save} from './infrastructure/mysql').
-- 2.instead of that, allow accessing just only `mysql` module via `index.ts` (e.g import {save} from './infrastructure')
-- 3.don't allow accessing `infrastracture` besides `repository directory`
-
-### forbid direct accessing `mysql.ts` and allow just only accessing `mysql` via `index.ts`
-To achieve this limitation. You have to write comment in `infrastructure/mysql.ts`, like this.
-
-```javascript
-// @dependency-relation: allow: ./index.ts
-export function mysql() {}
-```
-
-This limitation forbids importing this file except `infrastructure/index.ts`.
-This achieves rule 1 and 2.
-
-### don't allow accessing `infrastracture` besides `repository`
-To achieve this limitation. You have to write comment in `infrastructure/index.ts`.
-
-```javascript
-// @dependency-relation: allow: ../repository
-export * as mysql from './mysql.ts'
-```
-
-This limitation forbids import this file except `repository directory`.
-Hence, all repository directory's files can access this file, but other file can't access this file.
-This achieves rule 3.
-
-
+s
 
