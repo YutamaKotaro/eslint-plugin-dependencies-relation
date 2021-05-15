@@ -8,6 +8,7 @@ export function readRootCommentInfo(filePath: string): RootCommentInfo {
   const indexFilePath = getIndexFilePath(filePath)
   if (!indexFilePath) {
     return {
+      rootFilePath: '',
       noRestriction: true,
       type: TYPES.NONE,
     }
@@ -22,17 +23,19 @@ export function readRootCommentInfo(filePath: string): RootCommentInfo {
   return rootCommentInfo
 }
 
-export function createRootCommentInfo(filePath: string): RootCommentInfo {
-  const extractedComment = extract(filePath)
+export function createRootCommentInfo(rootFilePath: string): RootCommentInfo {
+  const extractedComment = extract(rootFilePath)
   if (!extractedComment) {
     return {
+      rootFilePath,
       noRestriction: true,
       type: TYPES.NONE,
     }
   }
   const { fileStrings, option } = parseArgStrings(extractedComment)
-  const filePaths = parseFilePaths(fileStrings, filePath)
+  const filePaths = parseFilePaths(fileStrings, rootFilePath)
   return {
+    rootFilePath,
     type: option,
     noRestriction: false,
     filePath: filePaths,

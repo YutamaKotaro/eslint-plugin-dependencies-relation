@@ -23,12 +23,14 @@ export function createCommentInfo(filePath: string): CommentInfo {
   if (!extractedComment) {
     return {
       noRestriction: true,
+      filePath,
     }
   }
   const { fileStrings } = parseArgStrings(extractedComment)
   const filePaths = parseFilePaths(fileStrings, filePath)
 
   return {
+    filePath,
     noRestriction: false,
     allowPath: filePaths,
   }

@@ -1,4 +1,4 @@
-import { CommentInfo, RootCommentInfo } from './cash'
+import { CommentInfo, RootCommentInfo, contextCash } from './cash'
 import { STATEMENT_TYPES, T_STATEMENT_TYPES, TYPES } from './constants'
 
 type SafeResult = {
@@ -32,16 +32,20 @@ export function compare(
   }
   const baseFile: string = context.getFilename()
   const allowFilePaths = createAllowFilePath(commentInfo, rootCommentInfo)
-
   for (const _alloOnlypath of allowFilePaths) {
     const reg = new RegExp(String.raw`^${_alloOnlypath}.*`)
-    if (!reg.test(baseFile)) {
-      const error = createErrorMessage(reportFilePath, option.type)
-
+    if (reg.test(baseFile)) {
       return {
-        existError: true,
-        error,
+        existError: false,
       }
+    }
+  }
+  if (allowFilePaths.length > 0) {
+    const error = createErrorMessage(reportFilePath, option.type)
+
+    return {
+      existError: true,
+      error,
     }
   }
 
@@ -64,8 +68,13 @@ export function createAllowFilePath(
   const paths = commentInfo.allowPath || []
   const rootPaths = rootCommentInfo.filePath || []
   const { type } = rootCommentInfo
-
   switch (type) {
+    case TYPES.ALLOW_ONLY_ROOT: {
+      if (rootCommentInfo.rootFilePath === commentInfo.filePath) {
+        return [...rootPaths, ...paths]
+      }
+      return [rootCommentInfo.rootFilePath]
+    }
     case TYPES.ALLOW_ROOT: {
       return [...paths, ...rootPaths]
     }

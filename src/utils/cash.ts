@@ -4,8 +4,10 @@ export type CommentInfo = {
   noRestriction: boolean
   allowPath?: string[]
   errors?: string
+  filePath: string
 }
 export type RootCommentInfo = {
+  rootFilePath: string,
   noRestriction: boolean
   type: 'allow' | 'allow@root' | 'allowOnly@root' | 'none'
   filePath?: string[]
