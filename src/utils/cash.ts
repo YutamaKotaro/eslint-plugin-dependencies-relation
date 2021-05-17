@@ -7,10 +7,10 @@ export type CommentInfo = {
   filePath: string
 }
 export type RootCommentInfo = {
-  rootFilePath: string
+  filePath: string
   noRestriction: boolean
   type: 'allow' | 'allow@root' | 'allowOnly@root' | 'none'
-  filePath?: string[]
+  allowPath?: string[]
 }
 
 class CashComment {

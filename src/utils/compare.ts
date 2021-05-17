@@ -70,10 +70,10 @@ export function createAllowFilePath(
   const { type } = rootCommentInfo
   switch (type) {
     case TYPES.ALLOW_ONLY_ROOT: {
-      if (rootCommentInfo.rootFilePath === commentInfo.filePath) {
+      if (rootCommentInfo.filePath === commentInfo.filePath) {
         return [...rootPaths, ...paths]
       }
-      return [rootCommentInfo.rootFilePath]
+      return [rootCommentInfo.filePath]
     }
     case TYPES.ALLOW_ROOT: {
       return [...paths, ...rootPaths]
