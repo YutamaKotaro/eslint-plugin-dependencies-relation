@@ -7,7 +7,7 @@ import {
   createTsxOption,
   createOption,
   createVueOption,
-} from '../../utils/test'
+} from '../../test-utils/test'
 import { createErrorMessage } from '../../../src/utils/compare'
 
 const ruleTester = new RuleTester()

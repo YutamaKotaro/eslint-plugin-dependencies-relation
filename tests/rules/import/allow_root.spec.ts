@@ -1,6 +1,6 @@
 import { RuleTester } from 'eslint'
 import { importLimitation } from '../../../src/rules/import'
-import { createJsOption, createVueOption } from '../../utils/test'
+import { createJsOption, createVueOption } from '../../test-utils/test'
 import { createErrorMessage } from '../../../src/utils/compare'
 
 const ruleTester = new RuleTester()

@@ -1,2 +1,3 @@
 // @dependency-relation: allowOnly@root: ../app
-export function forbid() {}
+export * from './utils'
+export * from './module'

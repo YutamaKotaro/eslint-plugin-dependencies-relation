@@ -35,6 +35,7 @@ export const importLimitation: TSESLint.RuleModule<'import', unknown[]> = {
     contextCash.init(context)
     return {
       ImportDeclaration(node) {
+        console.log(context)
         // 1.
         const filePath = node.source.value
         const ignore = ignoreFile(context.getFilename())
@@ -53,6 +54,10 @@ export const importLimitation: TSESLint.RuleModule<'import', unknown[]> = {
         // 2.
         const rootCommentInfo = readRootCommentInfo(resolvedPath)
         const commentInfo = readComment(resolvedPath)
+        console.log({
+          rootCommentInfo,
+          commentInfo,
+        })
         // 3.
         const result = compare(
           commentInfo,
