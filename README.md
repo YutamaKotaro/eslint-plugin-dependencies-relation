@@ -1,5 +1,7 @@
 # eslint-plugin-dependency-relation
 Import relation linting rule for ESLint.  
+beta-version, testing now.
+
 Can use this in.
 
 - JavaScript Project
