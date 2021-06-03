@@ -1,9 +1,9 @@
 import { TSESLint } from '@typescript-eslint/experimental-utils'
 // @ts-ignore
 import resolve from 'eslint-module-utils/resolve'
-import { readRootCommentInfo, readComment } from '../../utils/read'
+import { readComment, readRootCommentInfoList } from '../../utils/read'
 import { contextCash } from '../../utils/cash'
-import { compare } from '../../utils/compare'
+import { compareList } from '../../utils/compare'
 import { ignoreFile } from '../../utils/fileChecker'
 import { STATEMENT_TYPES } from '../../utils/constants'
 
@@ -35,7 +35,6 @@ export const importLimitation: TSESLint.RuleModule<'import', unknown[]> = {
     contextCash.init(context)
     return {
       ImportDeclaration(node) {
-        console.log(context)
         // 1.
         const filePath = node.source.value
         const ignore = ignoreFile(context.getFilename())
@@ -52,17 +51,12 @@ export const importLimitation: TSESLint.RuleModule<'import', unknown[]> = {
 
         if (/.*\/node_modules\/.*/.test(resolvedPath)) return
         // 2.
-        const rootCommentInfo = readRootCommentInfo(resolvedPath)
+        const rootCommentInfoList = readRootCommentInfoList(resolvedPath)
         const commentInfo = readComment(resolvedPath)
-        console.log({
-          rootCommentInfo,
-          commentInfo,
-        })
         // 3.
-        const result = compare(
+        const result = compareList(
           commentInfo,
-          rootCommentInfo,
-          context,
+          rootCommentInfoList,
           `${filePath}`,
           {
             type: STATEMENT_TYPES.IMPORT,

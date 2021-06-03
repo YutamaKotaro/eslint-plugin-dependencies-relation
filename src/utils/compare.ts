@@ -9,6 +9,24 @@ type ErrorResult = {
   error: string
 }
 
+export function compareList(
+  commentInfo: CommentInfo,
+  rootCommentInfoList: RootCommentInfo[],
+  filePath: string,
+  option: {
+    type: T_STATEMENT_TYPES
+  }
+): SafeResult | ErrorResult {
+  let result: SafeResult | ErrorResult = { existError: false }
+  const context = contextCash.get()
+  for (const _el of rootCommentInfoList) {
+    result = compare(commentInfo, _el, context, filePath, option)
+    if (result.existError) break
+  }
+
+  return result
+}
+
 export function compare(
   commentInfo: CommentInfo,
   rootCommentInfo: RootCommentInfo,
@@ -61,24 +79,48 @@ export function createErrorMessage(
   return `${type} path ${path} is not allowed from this file`
 }
 
+export function createAllowFilePathRoot(
+  commentInfo: CommentInfo,
+  rootCommentInfo: RootCommentInfo[]
+) {
+  let result: string[] = []
+  for (const rootInfo of rootCommentInfo) {
+    const _result = createAllowFilePath(commentInfo, rootInfo)
+    result = merge(result, _result)
+    if (rootInfo?.type === TYPES.ALLOW_ONLY_ROOT) {
+      break
+    }
+  }
+  return result
+}
+
 export function createAllowFilePath(
   commentInfo: CommentInfo,
   rootCommentInfo: RootCommentInfo
 ) {
   const paths = commentInfo.allowPath || []
-  const rootPaths = rootCommentInfo.filePath || []
+  const rootPaths = rootCommentInfo.allowPath || []
   const { type } = rootCommentInfo
   switch (type) {
     case TYPES.ALLOW_ONLY_ROOT: {
       if (rootCommentInfo.filePath === commentInfo.filePath) {
-        return [...rootPaths, ...paths]
+        return merge(rootPaths, paths)
       }
       return [rootCommentInfo.filePath]
     }
     case TYPES.ALLOW_ROOT: {
-      return [...paths, ...rootPaths]
+      return merge(paths, rootPaths)
     }
     default:
       return paths
   }
+}
+
+export function merge(a: string[], b: string[]) {
+  const res = [...a]
+  for (const elem of b) {
+    if (!res.includes(elem)) res.push(elem)
+  }
+
+  return res
 }

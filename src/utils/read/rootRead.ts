@@ -4,6 +4,25 @@ import { contextCash, rootComment, RootCommentInfo } from '../cash'
 import { extract, parseFilePaths, parseArgStrings } from './lib'
 import { TYPES } from '../constants'
 
+export function readRootCommentInfoList(filePath: string): RootCommentInfo[] {
+  const baseFile = contextCash.get().getFilename()
+  const pathList = filePath.split('/')
+  const result: RootCommentInfo[] = [readRootCommentInfo(filePath)]
+  pathList.pop()
+  for (let i = 0, l = pathList.length; i < l; i++) {
+    const childRoot = pathList.join('/')
+    if (childRoot === baseFile) {
+      break
+    }
+    const _result = readRootCommentInfo(childRoot)
+    result.push(_result)
+    pathList.pop()
+    if (_result.type === TYPES.ALLOW_ONLY_ROOT) break
+  }
+
+  return result
+}
+
 export function readRootCommentInfo(filePath: string): RootCommentInfo {
   const indexFilePath = getIndexFilePath(filePath)
   if (!indexFilePath) {
@@ -24,7 +43,12 @@ export function readRootCommentInfo(filePath: string): RootCommentInfo {
 }
 
 export function createRootCommentInfo(filePath: string): RootCommentInfo {
-  const extractedComment = extract(filePath)
+  let extractedComment
+  try {
+    extractedComment = extract(filePath)
+  } catch (_) {
+    extractedComment = null
+  }
   if (!extractedComment) {
     return {
       filePath,

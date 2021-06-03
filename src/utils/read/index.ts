@@ -1,3 +1,3 @@
 export { readComment } from './read'
-export { readRootCommentInfo } from './rootRead'
+export { readRootCommentInfo, readRootCommentInfoList } from './rootRead'
 export * from './lib'
